@@ -1,0 +1,1 @@
+{"version":3,"file":"20230809073131_create_game_table.js","sourceRoot":"","sources":["../../../src/migrations/20230809073131_create_game_table.ts"],"names":[],"mappings":";;;AAGO,KAAK,UAAU,EAAE,CAAC,IAAU;IAC/B,MAAM,IAAI,CAAC,GAAG,CACV,qZAAqZ,CACtZ,CAAC;AACR,CAAC;AAJD,gBAIC;AAGM,KAAK,UAAU,IAAI,CAAC,IAAU;AACrC,CAAC;AADD,oBACC"}
