@@ -9,7 +9,7 @@ const swagger_1 = require("./swagger");
 const all_exceptions_filter_1 = require("./dispatcher/all-exceptions.filter");
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
-    const port = process.env.PORT || 5000;
+    const port = process.env.PORT || 9000;
     app.enableCors({
         origin: '*',
         exposedHeaders: ['Content-Length'],

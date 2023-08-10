@@ -9,7 +9,7 @@ import { AllExceptionsFilter } from './dispatcher/all-exceptions.filter';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  const port = process.env.PORT || 5000;
+  const port = process.env.PORT || 9000;
 
   app.enableCors({
     origin: '*',
