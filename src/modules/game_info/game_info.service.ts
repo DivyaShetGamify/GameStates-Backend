@@ -80,7 +80,7 @@ export class GameInfoService {
       .select(gameParameter[0], COLUMN.MONTH)
       .whereBetween(COLUMN.MONTH, [startDate, endDate])
       .andWhere(COLUMN.GAME, game)
-      .from('game_info');
+      .from(DB_TABLE.GAME_STATS);
 
     const gameDataObj = gameData.reduce((result, item) => {
       result[item.month] = item[gameParameter[0]];
