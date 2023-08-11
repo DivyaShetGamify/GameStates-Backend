@@ -1,10 +1,10 @@
-import { Knex } from 'knex';
-import { v4 as uuidv4 } from 'uuid';
-import * as dotenv from 'dotenv';
-import { DB_CONNECTION } from 'src/database/database.provider';
-import { jsonData } from 'gameData';
-import { InjectConnection } from 'nest-knexjs';
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Knex } from "knex";
+import { v4 as uuidv4 } from "uuid";
+import * as dotenv from "dotenv";
+import { DB_CONNECTION } from "src/database/database.provider";
+import { jsonData } from "gameData";
+import { InjectConnection } from "nest-knexjs";
+import { BadRequestException, Injectable } from "@nestjs/common";
 // import { jsonData } from 'gameData';
 
 dotenv.config();
@@ -12,14 +12,14 @@ dotenv.config();
 @Injectable()
 export class SeederService {
   constructor(
-    @InjectConnection(DB_CONNECTION.GAME_DATA) private readonly knex: Knex,
+    @InjectConnection(DB_CONNECTION.GAME_DATA) private readonly knex: Knex
   ) {}
 
   async seed() {
     const seedData = jsonData.map((record) => ({
       id: uuidv4(), // Generate a new UUID for each record using UUIDv4
       month: record.month,
-      game: 'God Of Fortune',
+      game: "God Of Fortune",
       betCount: parseInt(record.betCount),
       playerCount: record.playerCount,
       betAmount: parseFloat(record.betAmount),
@@ -28,7 +28,7 @@ export class SeederService {
       profit: record.profit,
     }));
     try {
-      this.knex.insert(seedData).into('game_info');
+      this.knex.insert(seedData).into("game_info");
     } catch (e) {
       throw new BadRequestException(e);
     }

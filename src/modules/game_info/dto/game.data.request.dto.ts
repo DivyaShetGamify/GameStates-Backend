@@ -1,6 +1,6 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsDate, IsEnum, IsNotEmpty, IsString } from 'class-validator';
-import { Games } from 'src/config/constants';
+import { ApiProperty } from "@nestjs/swagger";
+import { IsDate, IsEnum, IsNotEmpty, IsString } from "class-validator";
+import { Games } from "src/config/constants";
 
 export class GameRequestDto {
   @ApiProperty()

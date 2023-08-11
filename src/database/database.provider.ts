@@ -1,9 +1,9 @@
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { KnexModule } from 'nest-knexjs';
-require('dotenv').config();
+import { ConfigModule, ConfigService } from "@nestjs/config";
+import { KnexModule } from "nest-knexjs";
+require("dotenv").config();
 
 export const DB_CONNECTION = {
-  GAME_DATA: 'GAME_DATA',
+  GAME_DATA: "GAME_DATA",
 };
 
 export const databaseProvider = [
@@ -13,11 +13,11 @@ export const databaseProvider = [
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
         config: {
-          client: 'mysql2',
+          client: "mysql2",
           connection: {
             host: process.env.HOST,
             port: parseInt(process.env.DBPORT) || 3306,
-            user: process.env.USERNAME,
+            user: process.env.DBUSER,
             password: process.env.PASSWORD,
             database: process.env.DATABASE,
           },
@@ -25,6 +25,6 @@ export const databaseProvider = [
         },
       }),
     },
-    DB_CONNECTION.GAME_DATA,
+    DB_CONNECTION.GAME_DATA
   ),
 ];

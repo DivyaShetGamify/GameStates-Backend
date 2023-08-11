@@ -13,7 +13,7 @@ const config: { [key: string]: Knex.Config } = {
       host: process.env.HOST,
       port: parseInt(process.env.DBPORT),
       database: process.env.DATABASE,
-      user: process.env.USERNAME,
+      user: process.env.DBUSER,
       password: process.env.PASSWORD,
     },
   },

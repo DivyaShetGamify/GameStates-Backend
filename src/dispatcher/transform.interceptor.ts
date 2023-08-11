@@ -1,6 +1,11 @@
-import { NestInterceptor, ExecutionContext, CallHandler, Injectable } from '@nestjs/common';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import {
+  NestInterceptor,
+  ExecutionContext,
+  CallHandler,
+  Injectable,
+} from "@nestjs/common";
+import { Observable } from "rxjs";
+import { map } from "rxjs/operators";
 
 /**
  * Success response schema
@@ -16,14 +21,19 @@ export interface Response<T> {
  * Transforms object to valid json response
  */
 @Injectable()
-export class TransformInterceptor<T> implements NestInterceptor<T, Response<T>> {
-  intercept(context: ExecutionContext, next: CallHandler): Observable<Response<T>> {
+export class TransformInterceptor<T>
+  implements NestInterceptor<T, Response<T>>
+{
+  intercept(
+    context: ExecutionContext,
+    next: CallHandler
+  ): Observable<Response<T>> {
     return next.handle().pipe(
-      map(result => ({
+      map((result) => ({
         isError: false,
-        message: result.message || '',
+        message: result.message || "",
         data: result.data || {},
-      })),
+      }))
     );
   }
 }
