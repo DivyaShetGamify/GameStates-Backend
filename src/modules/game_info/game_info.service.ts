@@ -72,18 +72,18 @@ export class GameInfoService {
       );
     }
 
-    const gameParameter = Object.keys(GameInfoType).find(
-      (key) => GameInfoType[key] === gameInfo
-    );
+    const gameParameter = Object.entries(GameInfoType).find(([key, value]) => {
+      if (value === gameInfo) return key;
+    });
 
     const gameData = await this.knex
-      .select(gameParameter, COLUMN.MONTH)
+      .select(gameParameter[0], COLUMN.MONTH)
       .whereBetween(COLUMN.MONTH, [startDate, endDate])
       .andWhere(COLUMN.GAME, game)
-      .from(DB_TABLE.GAME_STATS);
+      .from('game_info');
 
     const gameDataObj = gameData.reduce((result, item) => {
-      result[item.month] = item[`${gameInfo}`];
+      result[item.month] = item[gameParameter[0]];
       return result;
     }, {});
 
