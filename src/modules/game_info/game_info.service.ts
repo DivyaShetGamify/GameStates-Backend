@@ -5,7 +5,10 @@ import { InjectConnection } from "nest-knexjs";
 import { COLUMN, DB_TABLE, GameInfoType, Games } from "src/config/constants";
 import { v4 as uuidv4 } from "uuid";
 import { DB_CONNECTION } from "../../database/database.provider";
-import { GameResponseDto } from "./dto/game.data.response.dto";
+import {
+  GameProfitResponseDto,
+  GameResponseDto,
+} from "./dto/game.data.response.dto";
 
 @Injectable()
 export class GameInfoService {
@@ -56,9 +59,8 @@ export class GameInfoService {
     const today = new Date(); // Extract the year, month, and day from the Date object
     const year = today.getFullYear();
     const month = String(today.getMonth() + 1).padStart(2, "0"); // Months are zero-based, so add 1
-    const day = String(today.getDate()).padStart(2, "0"); // Combine the year, month, and day to form the formatted date
 
-    const formattedDate = `${year}-${month}-${day}`;
+    const formattedDate = `${year}-${month}`;
 
     if (startDate > formattedDate) {
       throw new BadRequestException(
@@ -72,18 +74,29 @@ export class GameInfoService {
       );
     }
 
-    const gameParameter = Object.entries(GameInfoType).find(([key, value]) => {
-      if (value === gameInfo) return key;
-    });
+    // For BetAmount, Payout and Profit
+    if (gameInfo === GameInfoType.betAmount) {
+      let gameStats = await this.knex
+        .select("*", COLUMN.MONTH)
+        .whereBetween(COLUMN.MONTH, [startDate, endDate])
+        .andWhere(COLUMN.GAME, game)
+        .from(DB_TABLE.GAME_STATS);
+      return new GameProfitResponseDto(gameStats);
+    }
+
+    // For Bet Count, Player Count and RTP
+    const gameParameter = Object.keys(GameInfoType).find(
+      (key) => GameInfoType[key] === gameInfo
+    );
 
     const gameData = await this.knex
-      .select(gameParameter[0], COLUMN.MONTH)
+      .select(gameParameter, COLUMN.MONTH)
       .whereBetween(COLUMN.MONTH, [startDate, endDate])
       .andWhere(COLUMN.GAME, game)
       .from(DB_TABLE.GAME_STATS);
 
     const gameDataObj = gameData.reduce((result, item) => {
-      result[item.month] = item[gameParameter[0]];
+      result[item.month] = item[gameParameter];
       return result;
     }, {});
 

@@ -11,7 +11,10 @@ import { ApiOkResponse, ApiOperation, ApiTags } from "@nestjs/swagger";
 import { GameInfoType, Games } from "src/config/constants";
 import { TransformInterceptor } from "src/dispatcher/transform.interceptor";
 import { SuccessResponse } from "src/interface/success.response.interface";
-import { GameResponseDto } from "./dto/game.data.response.dto";
+import {
+  GameProfitResponseDto,
+  GameResponseDto,
+} from "./dto/game.data.response.dto";
 import { GameInfoService } from "./game_info.service";
 
 @Controller("game-info")
@@ -35,7 +38,7 @@ export class GameInfoController {
     @Query("endDate") endDate: string,
     @Query("game") game: Games,
     @Query("gameInfo") gameInfo: GameInfoType
-  ): Promise<SuccessResponse<GameResponseDto>> {
+  ): Promise<SuccessResponse<GameResponseDto | GameProfitResponseDto>> {
     const data = await this.gameInfoService.findOne(
       startDate,
       endDate,
