@@ -45,6 +45,6 @@ export class GameInfoController {
       game,
       gameInfo
     );
-    return { data: data, message: `Every month's ${gameInfo}` };
+    return { data: data, message: `Monthly ${gameInfo}` };
   }
 }
